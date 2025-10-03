@@ -27,61 +27,52 @@ class ModalCreateProduct {
         const form = document.createElement('form');
         form.classList.add('formCreateProduct');
 
+        // Nome do Produto
         const label = document.createElement('label');
+        label.setAttribute('for', 'nomeProduto');
         label.innerText = 'Nome do Produto';
         const input = document.createElement('input');
         input.required = true;
         input.placeholder = 'Digitar o nome';
         input.type = 'text';
         input.name = 'nome';
+        input.id = 'nomeProduto';
+        input.setAttribute('aria-label', 'Nome do produto');
 
+        // Descrição do Produto
         const label2 = document.createElement('label');
+        label2.setAttribute('for', 'descricaoProduto');
         label2.innerText = 'Descrição';
         const input2 = document.createElement('input');
         input2.required = true;
         input2.placeholder = 'Digitar a descrição';
         input2.type = 'text';
         input2.name = 'descricao';
+        input2.id = 'descricaoProduto';
+        input2.setAttribute('aria-label', 'Descrição do produto');
 
+        // Categorias
         const label3 = document.createElement('label');
         label3.innerText = 'Categorias';
-        const input3 = document.createElement('input');
-        input3.required = true;
-        input3.type = 'hidden';
-        input3.name = 'categoria';
+        const selectCategory = document.createElement('select');
+        selectCategory.required = true;
+        selectCategory.name = 'categoria';
 
-        const divButtons = document.createElement('div');
-        divButtons.classList.add('divButtons');
+        const option1 = document.createElement('option');
+        option1.value = 'Panificadora';
+        option1.innerText = 'Panificadora';
 
-        const buttonCategory1 = document.createElement('span');
-        buttonCategory1.classList.add('buttonCategory');
-        buttonCategory1.innerText = 'Panificadora';
-        buttonCategory1.addEventListener('click', () => {
-            input3.value = 'Panificadora';
-            ModalCreateProduct.categoryVerify();
-            buttonCategory1.classList.add('activeCategory');
-        });
+        const option2 = document.createElement('option');
+        option2.value = 'Frutas';
+        option2.innerText = 'Frutas';
 
-        const buttonCategory2 = document.createElement('span');
-        buttonCategory2.classList.add('buttonCategory');
-        buttonCategory2.innerText = 'Frutas';
-        buttonCategory2.addEventListener('click', () => {
-            input3.value = 'Frutas';
-            ModalCreateProduct.categoryVerify();
-            buttonCategory2.classList.add('activeCategory');
-        });
+        const option3 = document.createElement('option');
+        option3.value = 'Bebidas';
+        option3.innerText = 'Bebidas';
 
-        const buttonCategory3 = document.createElement('span');
-        buttonCategory3.classList.add('buttonCategory');
-        buttonCategory3.innerText = 'Bebidas';
-        buttonCategory3.addEventListener('click', () => {
-            input3.value = 'Bebidas';
-            ModalCreateProduct.categoryVerify();
-            buttonCategory3.classList.add('activeCategory');
-        });
+        selectCategory.append(option1, option2, option3);
 
-        divButtons.append(buttonCategory1, buttonCategory2, buttonCategory3);
-
+        // Preço do Produto
         const label4 = document.createElement('label');
         label4.innerText = 'Valor do Produto';
         const input4 = document.createElement('input');
@@ -89,6 +80,7 @@ class ModalCreateProduct {
         input4.type = 'number';
         input4.name = 'preco';
 
+        // Link da Imagem
         const label5 = document.createElement('label');
         label5.innerText = 'Link da imagem';
         const input5 = document.createElement('input');
@@ -96,34 +88,41 @@ class ModalCreateProduct {
         input5.type = 'text';
         input5.name = 'imagem';
 
+        // Botão de Cadastro
         const button = document.createElement('input');
         button.type = 'submit';
         button.value = 'Cadastrar Produto';
 
+        // Adicionando os elementos ao modal
         modalTitleDiv.append(modalTitle);
-
         modalHeader.append(modalTitleDiv, close);
-
-        form.append(label, input, label2, input2, label3, divButtons, input3, label4, input4, label5, input5, button);
-
+        form.append(label, input, label2, input2, label3, selectCategory, label4, input4, label5, input5, button);
         modal.append(modalHeader, form);
-
         bgModal.appendChild(modal);
-
         body.appendChild(bgModal);
 
+        // Fechar modal ao clicar no 'X'
         close.addEventListener('click', () => {
             bgModal.remove();
         });
 
+        // Submissão do formulário
         form.addEventListener('submit', (event) => {
             ModalCreateProduct.submit(event);
         });
     }
+
     static submit(event) {
         event.preventDefault();
         const data = ModalCreateProduct.dataRecive(event);
-        ModalCreateProduct.createProduct(data);
+
+        // Validação dos dados antes de enviar
+        const validationResult = ModalCreateProduct.validateData(data);
+        if (validationResult) {
+            ModalCreateProduct.createProduct(data);
+        } else {
+            ModalPopUp.modalRed('Preencha todos os campos corretamente!');
+        }
     }
 
     static dataRecive(event) {
@@ -134,8 +133,30 @@ class ModalCreateProduct {
                 values[item.name] = item.value;
             }
         });
-
         return values;
+    }
+
+    static validateData(data) {
+        const { nome, preco, categoria, descricao, imagem } = data;
+
+        // Verifica se todos os campos estão preenchidos
+        if (!nome || !descricao || !categoria || !preco || !imagem) {
+            return false;
+        }
+
+        // Verifica se o preço é um valor numérico positivo
+        if (isNaN(preco) || parseFloat(preco) <= 0) {
+            return false;
+        }
+
+        // Verifica se o link da imagem é uma URL válida
+        try {
+            new URL(imagem);
+        } catch (_) {
+            return false; // Caso a URL não seja válida
+        }
+
+        return true; // Tudo está válido
     }
 
     static async createProduct(data) {
@@ -143,11 +164,17 @@ class ModalCreateProduct {
         if (nome && preco && categoria && descricao && imagem) {
             await Api.postNewProduct(data);
             ModalPopUp.modalGreen('Produto cadastrado com sucesso');
-            setTimeout(() => window.location.reload(), 2500);
+            
+            // Fechar o modal após o sucesso
+            const bgModal = document.querySelector('.bg-modalCreateProduct');
+            bgModal.remove();
+
+            setTimeout(() => window.location.reload(), 2500); // Recarga da página após o delay
         } else {
             ModalPopUp.modalRed('Preencha todos os campos!');
         }
     }
+
     static categoryVerify() {
         const buttons = document.querySelectorAll('.buttonCategory');
         buttons.forEach((button) => {
