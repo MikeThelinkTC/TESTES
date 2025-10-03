@@ -1,0 +1,92 @@
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,500,1,0"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script
+      src="https://kit.fontawesome.com/d7a0f93d72.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="src/css/reset.css" />
+    <link rel="stylesheet" href="src/css/style.css" />
+    <title>SITE DE MINECRAFT</title>
+  </head>
+  <body>
+    <div class="box-shadow">
+      <header>
+        <h1>LC</h1>
+        <h2>BURGUER</h2>
+        <div class="userProfile">
+          <span id="userProfileIcon" class="material-symbols-rounded"
+            >account_circle</span
+          >
+          <div class="userProfileOpen profileToggle">
+            <span class="material-symbols-rounded">arrow_drop_up</span>
+            <button class="userProfileBtnLogin">Login</button>
+            <button class="userProfileBtnRegister">Register</button>
+          </div>
+        </div>
+      </header>
+      <nav id="search">
+        <input
+          type="text"
+          name="button"
+          placeholder="Pesquisar por produto"
+          id="search-bar"
+          style="vertical-align: middle"
+        />
+      </nav>
+    </div>
+
+    <nav id="navigation" class="containerBox">
+      <button class="btnCategory navigationSelected" id="todos">
+        <p>Todos</p>
+      </button>
+
+      <button class="btnCategory" id="panificadora" class="first">
+        <img src="./src/images/Vector 411.png" alt="" />
+        <p>Lanches</p>
+      </button>
+
+      <button class="btnCategory" id="frutas">
+        <img src="./src/images/Icon_fruits.png" alt="" />
+        <p>Porção</p>
+      </button>
+
+      <button class="btnCategory" id="bebidas">
+        <img src="./src/images/wine.svg" alt="" />
+        <p>Bebidas</p>
+      </button>
+    </nav>
+    <section id="cart">
+      <div id="cart-tittle">
+        <h2>
+          <i class="fa-solid fa-cart-arrow-down"></i> &nbsp; &nbsp;Carrinho
+        </h2>
+      </div>
+      <div id="cart-products">
+        <div class="cartInfo">
+          <img src="./src/images/shopping-bag.png" alt="" />
+          <p>Por enquanto não temos produtos no carrinho</p>
+        </div>
+      </div>
+    </section>
+
+    <main id="container" class="containerBox"></main>
+
+
+    <footer>
+      <button class="btnCart">
+        <i class="fa-solid fa-cart-arrow-down"></i>&nbsp; &nbsp;Carrinho
+      </button>
+    </footer>
+
+    <script type="module" src="src/js/homePage.js"></script>
+  </body>
+</html>

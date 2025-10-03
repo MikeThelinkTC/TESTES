@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <script
+      src="https://kit.fontawesome.com/6512a114a5.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>LC Food DashBoard</title>
+  </head>
+  <body>
+    <header>
+      <div class="titleDashboard" id="titleDashboard">
+        <h1 class="titleKenzie">LC</h1>
+        <h1 class="titleFood">FOOD</h1>
+      </div>
+      <div class="utilityHeader">
+        <button id="buttonSeachMobileDashboard">
+          <img src="../images/search.svg" alt="iconSearch" class="iconSearch" />
+        </button>
+        <input
+          type="text"
+          placeholder="Pesquisar o produto"
+          id="searchDashboard"
+        />
+        <section class="profile">
+          <img
+            src="./../images/profile.svg"
+            alt="iconProfile"
+            class="iconProfile"
+          />
+          <div class="hoverProfile profileToggle">
+            <img
+              src="../images/Polygon.svg"
+              alt="polygon"
+              class="iconPoligon"
+            />
+
+            <p>Equipe 5</p>
+            <hr />
+            <button class="homeBtn">Home</button>
+            <button class="logOutBtn">Logout</button>
+          </div>
+        </section>
+      </div>
+    </header>
+    <div class="buttonsHeaderDashboard">
+      <nav id="navigation" class="dashboard-container">
+        <button id="todosDashboard">
+          <p>Todos</p>
+        </button>
+
+        <button class="first" id="panificadoraDashboard">
+          <img src="../images/Vector 411.png" alt="" />
+          <p>Lanches</p>
+        </button>
+
+        <button id="frutasDashboard">
+          <img src="../images/Icon_fruits.png" alt="" />
+          <p>Porção</p>
+        </button>
+
+        <button id="bebidasDashboard">
+          <img src="../images/wine.svg" alt="" />
+          <p>Bebidas</p>
+        </button>
+      </nav>
+
+      <aside class="clear">
+        <button class="addProduct">Adicionar novo produto</button>
+      </aside>
+    </div>
+
+    <section class="dashboard-container" id="list-header">
+      <h3 id="header-produto">Produto</h3>
+      <h3 id="header-categoria">Categorias</h3>
+      <h3 id="header-descrição">Descrição</h3>
+      <h3 id="header-acoes">Ações</h3>
+    </section>
+
+    <section id="dashContainer"></section>
+
+    <script type="module" src="./../js/dashboard.js"></script>
+    <script type="module" src="./../controller/FilterDashboard.js"></script>
+  </body>
+</html>
